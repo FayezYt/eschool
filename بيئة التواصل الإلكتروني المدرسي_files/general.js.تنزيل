@@ -1,0 +1,1656 @@
+// JavaScript Document
+
+var file_size = 2097152;
+
+/**************************************************************
+ * This function used to check email validation
+ * Author : Fatima Salameh
+ * Creation Date: 20 Sep 2012
+ ***************************************************************/
+function check_email(str) {
+
+	var x = str;
+	var atpos = x.indexOf("@");
+	var dotpos = x.lastIndexOf(".");
+
+	if (atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= x.length) {
+		return false;
+	} else {
+		return true;
+	}
+
+}
+
+
+/**************************************************************
+ * This function used to number validation
+ * Author : Fatima Salameh
+ * Creation Date: 20 Sep 2012
+ ***************************************************************/
+
+var digits = "0123456789";
+var phoneNumberDelimiters = "";
+var validWorldPhoneChars = phoneNumberDelimiters + "";
+var minDigitsInIPhoneNumber = 9;
+
+var phoneNumberDelimiters2 = "-";
+var validWorldPhoneChars2 = phoneNumberDelimiters2 + "";
+
+function isInteger(s)
+{
+	/*var i;
+     for (i = 0; i < s.length; i++)
+     {
+     var c = s.charAt(i);
+     if (((c < "0") || (c > "9"))) return false;
+     
+     }*/
+
+	var reg = new RegExp("^[0-9]+$");
+	if (reg.test(s) == true) {
+		return true;
+	} else {
+		return false
+	}
+}
+
+function isNotInteger(s)
+{
+	for (var i = 0; i < s.length; i++) {
+		var c = s.charAt(i);
+		if (c != ' ') {
+			if (isNaN(c) == false) {
+				return false;
+			}
+		}
+	}
+	// All characters are numbers.
+	// return true;
+}
+function trim(s)
+{
+	var i;
+	var returnString = "";
+	// Search through string's characters one by one.
+	// If character is not a whitespace, append to returnString.
+	for (i = 0; i < s.length; i++)
+	{
+		// Check that current character isn't whitespace.
+		var c = s.charAt(i);
+		if (c != " ")
+			returnString += c;
+	}
+	return returnString;
+}
+function stripCharsInBag(s, bag)
+{
+	var i;
+	var returnString = "";
+	// Search through string's characters one by one.
+	// If character is not in bag, append to returnString.
+	for (i = 0; i < s.length; i++)
+	{
+		// Check that current character isn't whitespace.
+		var c = s.charAt(i);
+		if (bag.indexOf(c) == -1)
+			returnString += c;
+	}
+	return returnString;
+}
+
+function checkIfIsNumber(strPhone) {
+	var bracket = 3
+	strPhone = trim(strPhone)
+	if (strPhone.indexOf("+") > 1)
+		return false
+	if (strPhone.indexOf("-") != -1)
+		bracket = bracket + 1
+	if (strPhone.indexOf("(") != -1 && strPhone.indexOf("(") > bracket)
+		return false
+	var brchr = strPhone.indexOf("(")
+	if (strPhone.indexOf("(") != -1 && strPhone.charAt(brchr + 2) != ")")
+		return false
+	if (strPhone.indexOf("(") == -1 && strPhone.indexOf(")") != -1)
+		return false
+	s = stripCharsInBag(strPhone, validWorldPhoneChars);
+	if (isInteger(s) == false) {
+		alert(alert_arr.integer_alert);
+		document.getElementById('user_id').focus();
+		return false;
+	}
+	if (s.length != minDigitsInIPhoneNumber) {
+		alert(alert_arr.NoOfDigits_alert);
+		document.getElementById('user_id').focus();
+		return false;
+	}
+
+//return (isInteger(s) && s.length == minDigitsInIPhoneNumber);
+}
+
+function checkIsNumber(strPhone) {
+	var bracket = 3
+	strPhone = trim(strPhone)
+	if (strPhone.indexOf("+") > 1)
+		return false
+	if (strPhone.indexOf("-") != -1)
+		bracket = bracket + 1
+	if (strPhone.indexOf("(") != -1 && strPhone.indexOf("(") > bracket)
+		return false
+	var brchr = strPhone.indexOf("(")
+	if (strPhone.indexOf("(") != -1 && strPhone.charAt(brchr + 2) != ")")
+		return false
+	if (strPhone.indexOf("(") == -1 && strPhone.indexOf(")") != -1)
+		return false
+	s = stripCharsInBag(strPhone, validWorldPhoneChars);
+	if (isInteger(s) == false) {
+		alert(alert_arr.wrong_numberType_alert);
+		return false;
+	}
+
+//return (isInteger(s) && s.length == minDigitsInIPhoneNumber);
+}
+
+function checkPhoneIsNumber(strPhone) {
+	var bracket = 3
+	strPhone = trim(strPhone)
+	if (strPhone.indexOf("+") > 1)
+		return false
+	if (strPhone.indexOf("-") != -1)
+		bracket = bracket + 1
+	if (strPhone.indexOf("(") != -1 && strPhone.indexOf("(") > bracket)
+		return false
+	var brchr = strPhone.indexOf("(")
+	if (strPhone.indexOf("(") != -1 && strPhone.charAt(brchr + 2) != ")")
+		return false
+	if (strPhone.indexOf("(") == -1 && strPhone.indexOf(")") != -1)
+		return false
+	s = stripCharsInBag(strPhone, phoneNumberDelimiters2);
+	if (isInteger(s) == false) {
+		return false;
+	}
+}
+
+
+/*****************************************************************************
+ * This function is uset to check if is charachter
+ * Author : Fatima Salameh
+ * Date: 10 Jan 2013
+ ******************************************************************************/
+function checkIsCharacter(strPhone) {
+	var bracket = 3
+	strPhone = trim(strPhone)
+	if (strPhone.indexOf("+") > 1)
+		return false
+	if (strPhone.indexOf("-") != -1)
+		bracket = bracket + 1
+	if (strPhone.indexOf("(") != -1 && strPhone.indexOf("(") > bracket)
+		return false
+	var brchr = strPhone.indexOf("(")
+	if (strPhone.indexOf("(") != -1 && strPhone.charAt(brchr + 2) != ")")
+		return false
+	if (strPhone.indexOf("(") == -1 && strPhone.indexOf(")") != -1)
+		return false
+
+	s = stripCharsInBag(strPhone, validWorldPhoneChars);
+	s = trim(s)
+	if (isNotInteger(s) == false) {
+		alert(alert_arr.isAlphabet_alert);
+		return false;
+	}
+}
+/**************************************************************
+ * this function is used to validate the vote section
+ * Author : Fatima Salameh
+ * Date 09 Oct 2012
+ **************************************************************/
+function voteFunction() {
+	var checked = false;
+
+	for (i = 0; i < form1.radioBtn.length; i++) {
+		if (form1.radioBtn[i].checked)
+			checked = true;
+	}
+
+	if (checked == false) {
+		alert(alert_arr.vote_alert);
+		return false;
+	} else {
+		document.getElementById('form1').submit();
+		//document.getElementById('form1').disabled = true;
+		document.getElementById('save_btn').onclick = 'disable';
+		return true;
+	}
+}
+
+
+/*************************************************************************************************
+ * This function is used to submit the form in the header to change the language.
+ * Author : Fatima Salameh
+ * Date: 11 Oct 2012
+ *************************************************************************************************/
+function changeChangeLangauge(lang, action) {
+	document.getElementById('change_language_action').value = action;
+	document.getElementById('language').value = lang;
+	document.getElementById('header_form').submit();
+
+}
+
+
+/*************************************************************************************************
+ * This function is used to submit the school selected
+ * Author : Fatima Salameh
+ * Date: 16 Dec 2012
+ *************************************************************************************************/
+function changeSchoolSelector(action) {
+	document.getElementById('change_school_action').value = action;
+	document.getElementById('selectSchool').value = document.getElementById('schoolSelector').value;
+	document.getElementById('selectSchool_form').submit();
+
+}
+
+/*************************************************************************************************
+ * This function is used to submit the Student Selected
+ * Author : Fatima Salameh
+ * Date: 17 Dec 2012
+ *************************************************************************************************/
+function changeStudentSelector(action) {
+
+	document.getElementById('change_student_action').value = action;
+	document.getElementById('selectStudent').value = document.getElementById('studentSelector').value;
+	document.getElementById('selectStudent_form').submit();
+
+}
+
+/*************************************************************************************************
+ * The following function is used to be sure the user entered a numeric value
+ * Author : Fatima Salameh
+ * Date: 23 Oct 2012
+ *************************************************************************************************/
+function IsNumber(strFieldValue, size) {
+
+	for (var i = 0; i < size; i++) {
+		if (strFieldValue.charAt(i) != "") {
+			if (strFieldValue.charAt(i) < "0" || strFieldValue.charAt(i) > "9") {
+				return false;
+			}
+		}
+	}
+	return true;
+
+}
+
+/*************************************************************************************************
+ * This function is for use ENTER to enter to admin
+ * Author : Fatima Salameh
+ * Date: 28 Oct 2012
+ *************************************************************************************************/
+
+function EnterOption(keyEnter) {
+	if (keyEnter.keyCode == 13) {
+		/* Submit al formulario */
+		document.getElementById('button').click();
+	}
+}
+
+
+/*******************************************************************
+ * This function used to submit the form to delete or update the record on
+ * Author : Fatima Salameh
+ * Date: 11th Jan, 2012
+ ******************************************************************/
+function submitToDeleteAndUpdate(action, record_id) {
+	var approve_action = true;
+
+	if (action == 'delete') {
+		document.getElementById('request_mode').value = action;
+		document.getElementById('record_id').value = record_id;
+		answer = confirm(alert_arr.confirm_delete_alert);
+
+		if (answer == 0) {
+			approve_action = false;
+		} else {
+			document.getElementById('listView').submit();
+		}
+	}
+
+	if (action == 'update' || action == 'create') {
+		document.getElementById('request_mode').value = action;
+		document.getElementById('record_id').value = record_id;
+		document.getElementById('listView').submit();
+	}
+}
+
+/*************************************************************************************************
+ * This function used get the drop dows list for district by governorate ID
+ * Author : Fatima Salameh
+ * Creation Date: 27 October 2012
+ *************************************************************************************************/
+function showDistrictByGovernorateId(governorate_id, picklis_string, pickList_size)
+{
+	var xmlhttp;
+
+	if (governorate_id == 0) {
+		document.getElementById("span_district").innerHTML = "<select name='district_id' id='district_id' class='picklist_style' style='width:" + pickList_size + ";'><option value='0'>-- " + picklis_string + " --</option></select>";
+		return;
+	}
+
+	if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp = new XMLHttpRequest();
+	} else {// code for IE6, IE5
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+
+	xmlhttp.onreadystatechange = function () {
+
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			document.getElementById("span_district").innerHTML = xmlhttp.responseText;
+		}
+	}
+	xmlhttp.open("GET", "./index.php?module=school&page=governorate_handler&governorate_id=" + governorate_id + "&pickList_size=" + pickList_size, true);
+	xmlhttp.send();
+}
+
+/*************************************************************************************************
+ * This function used get the drop dows list for directorate by governorate ID
+ * Author : Fatima Salameh
+ * Creation Date: 22 Feb 2013
+ *************************************************************************************************/
+function showDirectoratesByGovernorate(governorate_id, picklis_string, pickList_size)
+{
+	var xmlhttp;
+
+	if (governorate_id == 0) {
+		document.getElementById("span_directorate").innerHTML = "<select name='directorate_id' id='directorate_id' class='picklist_style' style='width:" + pickList_size + ";'><option value='0'>-- " + picklis_string + " --</option></select>";
+		return;
+	}
+
+	if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp = new XMLHttpRequest();
+	} else {// code for IE6, IE5
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+
+	xmlhttp.onreadystatechange = function () {
+
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			document.getElementById("span_directorate").innerHTML = xmlhttp.responseText;
+		}
+	}
+	xmlhttp.open("GET", "./index.php?module=school&page=directorateByGovernorate_handler&governorate_id=" + governorate_id + "&pickList_size=" + pickList_size, true);
+	xmlhttp.send();
+}
+
+
+/*************************************************************************************************
+ * This function used get the drop dows list for district by governorate ID
+ * Author : Fatima Salameh
+ * Creation Date: 27 October 2012
+ *************************************************************************************************/
+function showDirectorateByGovernorateSelectedDirectorate(governorate_id, picklis_string, directorate_id, pickList_size)
+{
+	var xmlhttp;
+	string = '';
+
+	if (governorate_id == 0) {
+		document.getElementById("span_directorate").innerHTML = "<select name='directorate_id' id='directorate_id' class='picklist_style' style='width:" + pickList_size + ";height:21px;'><option value='0'>-- " + picklis_string + " --</option></select>";
+		return;
+	}
+
+	if (directorate_id != 0) {
+		string = '&directorate_id=' + directorate_id + '';
+	}
+
+	if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp = new XMLHttpRequest();
+	} else {// code for IE6, IE5
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+
+	xmlhttp.onreadystatechange = function () {
+
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+			document.getElementById("span_directorate").innerHTML = xmlhttp.responseText;
+		}
+	}
+	xmlhttp.open("GET", "./index.php?module=school&page=directorateByGovernorate_handler&governorate_id=" + governorate_id +string + "&pickList_size=" + pickList_size, true);
+	xmlhttp.send();
+}
+
+/*************************************************************************************************
+ * This function used get the drop dows list for district by governorate ID
+ * Author : Fatima Salameh
+ * Creation Date: 27 October 2012
+ *************************************************************************************************/
+function showDistrictByGovernorateSelectedDistrict(governorate_id, picklis_string, district_id, pickList_size)
+{
+	var xmlhttp;
+	string = '';
+
+	if (governorate_id == 0) {
+		document.getElementById("span_district").innerHTML = "<select name='district_id' id='district_id' class='picklist_style' style='width:" + pickList_size + ";'><option value='0'>-- " + picklis_string + " --</option></select>";
+		return;
+	}
+
+	if (district_id != 0) {
+		string = '&district_id=' + district_id + '';
+	}
+
+	if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp = new XMLHttpRequest();
+	} else {// code for IE6, IE5
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+
+	xmlhttp.onreadystatechange = function () {
+
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+			document.getElementById("span_district").innerHTML = xmlhttp.responseText;
+		}
+	}
+	xmlhttp.open("GET", "./index.php?module=school&page=governorate_handler&governorate_id=" + governorate_id + "&pickList_size=" + pickList_size + string, true);
+	xmlhttp.send();
+}
+/******************************************************************************************************
+ * This function is used to check if userid exist or not
+ * Author : Fatima Salameh
+ * Creation Date: 20 Sep 2012
+ ******************************************************************************************************/
+function checkWrongId(user_id) {
+
+	var splitted_id = user_id.split('');
+	splitted_id = splitted_id.filter(item => item != "‎");
+	splitted_id = splitted_id.filter(item => item != "‏");
+	var result1 = new Array();
+	var sum_total = 0;
+	var div = 10;
+	var div_total = 0;
+	var last_result = 0;
+
+	var validator = new Array();
+	validator[0] = "1";
+	validator[1] = "2";
+	validator[2] = "1";
+	validator[3] = "2";
+	validator[4] = "1";
+	validator[5] = "2";
+	validator[6] = "1";
+	validator[7] = "2";
+
+	for (var i = 0; i < splitted_id.length - 1; i++) {
+
+		result1[i] = splitted_id[i] * validator[i];
+
+
+		if (result1[i] >= 10) {
+
+			result1[i] = (result1[i]).toString();
+			var splitted_result = result1[i].split('');
+			var sum = parseInt(splitted_result[0]) + parseInt(splitted_result[1]);
+			result1[i] = sum;
+
+		}
+
+		sum_total = parseInt(sum_total) + parseInt(result1[i]);
+
+	}
+	div_total = parseFloat(sum_total) % div;
+
+	if (div_total != 0) {
+		last_result = div - parseInt(div_total);
+	} else {
+		last_result = 0;
+	}
+
+	if (last_result == parseInt(splitted_id[8])) {
+		return true;
+	} else {
+		return false;
+	}
+
+}
+
+
+
+/***************************************************************************
+ * The following function is used to check if the file name is not empty
+ * Author: Fatima Salameh
+ * Date	: 14 Nov 2012
+ ****************************************************************************/
+function validateUploadedFiles() {
+
+	var item_types = new Array();
+	var count = 0;
+
+	var rows_count = document.getElementById('row_count').value;//number of rows
+
+	if (rows_count > 1) {
+
+		for (var row_id = 1; row_id <= rows_count; row_id++) {
+
+			if (document.getElementById('attachment_name' + row_id) != null && document.getElementById('is_new' + row_id).value == 1) {
+				file_name = document.getElementById('file_name' + row_id).elements;
+
+				if (document.getElementById('attachment_name' + row_id) != null) {
+
+					if (document.getElementById('attachment_type_id' + row_id).value == 0) {
+						alert(alert_arr.file_type_alert);
+						document.getElementById('attachment_name' + row_id).focus();
+						return false
+
+					} else if (document.getElementById('file_name' + row_id).value.length == 0) {
+						alert(alert_arr.file_empty_alert);
+						document.getElementById('attachment_name' + row_id).focus();
+						return false
+
+					} else if (/.*\.(exe)|(swf)|(ppt)|(flv)|(avi)|(mp3)|(mp4)$/.test(document.getElementById('file_name' + row_id).value.toLowerCase())) {
+						alert(alert_arr.file_alert);
+						document.getElementById('attachment_name' + row_id).focus();
+						return false
+					}
+				}
+				if (document.getElementById('attachment_name' + row_id).value == '' && document.getElementById('file_name' + row_id).value.length > 0) {
+					document.getElementById('attachment_name' + row_id).focus();
+					alert(alert_arr.file_name_alert);
+					return false
+
+				}
+			}
+		}
+
+	}
+	return true;
+}
+
+
+/***************************************************************************
+ * The following function is used to remove search txt on focus
+ * Author : Fatima Salameh
+ * Creation Date: 26 Jan 2013
+ ***************************************************************************/
+
+function WatermarkFocus(txtElem, strWatermark, field) {
+	search_has_text = true;
+
+	var search_text = field;
+	if (txtElem.value == strWatermark)
+	{
+		txtElem.value = '';
+		search_text.style.fontStyle = 'normal';
+		txtElem.style.color = '#000000';
+	}
+}
+
+/***************************************************************************
+ *	The following function is used to add search txt on blur
+ * Author : Fatima Salameh
+ * Creation Date: 26 Jan 2013
+ ***************************************************************************/
+function WatermarkBlur(txtElem, strWatermark, field) {
+	var search_text = field;
+	if (txtElem.value == '')
+	{
+		search_has_text = false;
+		txtElem.value = strWatermark;
+		txtElem.style.color = '#aaaaaa';
+	}
+}
+
+
+/***************************************************************************
+ * The following function is used to add new row to item Type
+ * Author : Fatima Salameh
+ * Creation Date: 13 Nov 2012
+ ***************************************************************************/
+function addRow() {
+
+	var table = document.getElementById('attachments_table');
+	var rows_count = document.getElementById('row_count').value;//number of rows
+	var row_id = parseInt(rows_count) + 1;
+	var rows_no = table.rows.length;//number of rows within the table
+	var row_1 = rows_no;
+	var row_2 = rows_no + 1;
+	var row1_obj = table.insertRow(row_1);//create 1st row for data
+	var row2_obj = table.insertRow(row_2);//create 2nd row for horizontal dotted line
+
+	var row1_tds = row1_obj.cells;
+	var row2_tds = row2_obj.cells;
+
+	//Create Horizontal Line TDs
+	var row_2_cell_1 = row2_obj.insertCell(0);
+	row_2_cell_1.className = 'subTable_lineX';
+	row2_tds[0].colSpan = 9;
+
+	//Set Data Row Height
+	row1_obj.style.height = '24px';
+
+	//Create Data DTs
+	var row_1_cell_1 = row1_obj.insertCell(0);
+	var row_1_cell_2 = row1_obj.insertCell(1);
+	var row_1_cell_3 = row1_obj.insertCell(2);
+	var row_1_cell_4 = row1_obj.insertCell(3);
+	var row_1_cell_5 = row1_obj.insertCell(4);
+	var row_1_cell_6 = row1_obj.insertCell(5);
+	var row_1_cell_7 = row1_obj.insertCell(6);
+	var row_1_cell_8 = row1_obj.insertCell(7);
+	var row_1_cell_9 = row1_obj.insertCell(8);
+
+	row_1_cell_1.className = 'subTable_lineY';
+	row_1_cell_3.className = 'subTable_lineY';
+	row_1_cell_5.className = 'subTable_lineY';
+	row_1_cell_7.className = 'subTable_lineY';
+	row_1_cell_9.className = 'subTable_lineY';
+
+
+	var attachment_str = document.getElementById('attachments_str').value;
+	var attachmentType_opts = '';
+
+	if (trim(attachment_str) != '') {
+
+		var attachments_arr = attachment_str.split('-@-');
+
+		for (var i = 0; i < attachments_arr.length; i++) {
+
+			batch = attachments_arr[i].split('-#-');
+			attachment_type_id = batch[0];
+			attachment_type_name = batch[1];
+
+			attachmentType_opts += '<option value=' + attachment_type_id + '>' + attachment_type_name + '</option>';
+		}
+	}
+
+	row_1_cell_2.className = '';
+	row_1_cell_2.innerHTML = '<select name="attachment_type_id' + row_id + '" id="attachment_type_id' + row_id + '" class="normal_editForm_box" style="width:90%;"><option value="0">-- ' + label_arr.select_attach_type_ttl + ' --</option>' + attachmentType_opts + '</select>';
+	row_1_cell_2.style.textAlign = 'center';
+
+
+	row_1_cell_4.className = '';
+	row_1_cell_4.innerHTML = '<input type="text" class="normal_editForm_box" style="width:90%;" id="attachment_name' + row_id + '" name="attachment_name' + row_id + '"/>';
+	row_1_cell_4.style.textAlign = 'center';
+
+	row_1_cell_6.className = '';
+	row_1_cell_6.innerHTML = '<input type="file" class="normal_editForm_box" style="width:220px" id="file_name' + row_id + '" name="file_name' + row_id + '"/>';
+	row_1_cell_6.style.textAlign = 'center';
+
+	//Action Cell
+	row_1_cell_8.className = '';
+	row_1_cell_8.innerHTML = '<img class="edit_images" src="images/delete.png" title="' + label_arr.delete_ttl + '" onClick="deleteRow(this,' + row_id + ')"><input type="hidden" name="is_new' + row_id + '" id="is_new' + row_id + '" value="1"/>';
+	row_1_cell_8.style.textAlign = 'center';
+
+	//increase row count by one
+	document.getElementById('row_count').value = row_id;
+
+}
+
+/***************************************************************************
+ * The following function is used to delete row to item Type
+ * Author : Fatima Salameh
+ * Creation Date: 13 Nov 2012
+ ***************************************************************************/
+function deleteRow(row, row_id) {
+
+	var data_row = row.parentNode.parentNode.rowIndex;
+	var answer = '';
+	answer = confirm(alert_arr.confirm_delete_alert);
+
+
+	if (answer != 0) {
+
+		if (document.getElementById('request_mode').value == 'update' && document.getElementById('is_new' + row_id).value != 1) {
+			document.getElementById('deletedFiles').value += document.getElementById('attachment_id' + row_id).value + '-@-';
+		}
+
+		//document.getElementById('deletedFiles').value += document.getElementById('attachment_id'+row_id).value+'-@-';
+		document.getElementById('attachments_table').deleteRow(data_row);//delete data row
+		document.getElementById('attachments_table').deleteRow(data_row);//delete horizontal dotted line
+
+	}
+
+}
+
+/***************************************************************************
+ * This function is used to get poppup
+ * Author :	Fatima Salameh
+ * Date	 :	22 Nov 2012
+ **************************************************************************/
+function getPopup(module, page, extaStr, p_width, p_height) {
+
+
+	if (p_width.split(' ').join('') == '')
+		p_width = 685;
+	else if (p_width.split(' ').join('') == '100%')
+		p_width = screen.width;
+	else if (p_width.split(' ').join('') != '')
+		p_width = p_width;
+
+	if (p_height.split(' ').join('') == '')
+		p_height = 700;
+	else if (p_height.split(' ').join('') == '100%')
+		p_height = screen.height;
+	else if (p_height.split(' ').join('') != '')
+		p_height = p_height;
+
+	var width = p_width;
+	var height = p_height;
+
+	var v_Options = "scrollbars=auto,resizable=0,directories=0,location=0,menubar=0,status=0,titlebar=0,toolbar=0,overflow:auto";
+	window.open("./index.php?module=" + module + "&page=" + page + extaStr + "", "" + page + "", "width=" + width + ",height=" + height + ",resizable=0,scrollbars=1,top=0,left=0");
+}
+
+/***************************************************************************
+ * The following function is used to close windows
+ * Author : Fatima Salameh
+ * Creation Date: 23 Nov 2012
+ **************************************************************************/
+function closeWindows() {
+	window.close();
+}
+
+/***************************************************************************
+ * This function is used to validate if the mark is float or character
+ * Author : Fatima Salameh
+ * Creation Date: 23 Nov 2012
+ **************************************************************************/
+function isFloat(value) {
+
+	if (isNaN(value)) {
+		return false;
+	} else {
+		if (parseFloat(value) || value == 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+}
+
+
+/******************************************************************************************************
+ * This function is used to encrypt current inserted password in order to compare it with saved one
+ * Author :	Nadeem Alqadi
+ * Date	 :	29 Nov 2012
+ *******************************************************************************************************/
+function encryptPassword() {
+	var xmlhttp;
+
+	var user_password = document.getElementById('user_password').value;
+
+	if (user_password.split(' ').join('') != '') {
+		if (window.XMLHttpRequest) {
+			xmlhttp = new XMLHttpRequest();
+		}
+		else {
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+			{
+				var encrypted_password = xmlhttp.responseText;
+				encrypted_password = trim(encrypted_password); // line used to clear all spaces on the result like php trim()
+				document.getElementById('user_encrypted_password').value = encrypted_password;
+			}
+		}
+		xmlhttp.open("GET", "./index.php?module=usersView&page=md5_handler&user_password=" + user_password, true);
+
+		xmlhttp.send();
+	}
+}
+
+/*******************************************************************
+ * This function is used to validate the create or edit form
+ * Author : Fatima Salameh
+ * Creation Date: 29 Nov 2012
+ ******************************************************************/
+
+function generalValidateForm() {
+	var page = document.getElementById('page').value;
+
+	if (page == 'changePassword') {
+		var user_type = document.getElementById('current_user_type').value;
+
+		var new_password = document.getElementById('new_password').value;
+		var strong_password = isStrongPwd(new_password);
+		var new_password_match = document.getElementById('new_password_match').value;
+
+		if (user_type != '1' && user_type != '0' && user_type != '5') {
+
+
+			var user_password = document.getElementById('user_password').value.split(' ').join('');
+		}
+
+		if (user_password == '' && (user_type != '1' || user_type != '5')) {
+
+			alert(alert_arr.users_current_password_alert);
+			document.getElementById('user_password').focus();
+
+		} else if (new_password.split(' ').join('') == '') {
+
+			alert(alert_arr.users_new_password_alert);
+			document.getElementById('new_password').focus();
+
+		} else if (new_password_match.split(' ').join('') == '') {
+
+			alert(alert_arr.users_retype_new_password_alert);
+			document.getElementById('new_password_match').focus();
+
+		} else if (new_password != new_password_match) {
+
+			alert(alert_arr.users_new_password_match_alert);
+			document.getElementById('new_password_match').focus();
+
+		}
+		// else if(!strong_password){
+		//     alert(alert_arr.strong_password_alert);
+		//     document.getElementById('new_password').focus();
+		// }
+		else {
+			document.getElementById('form1').submit();
+			//document.getElementById('form1').disabled = true;
+			document.getElementById('save_btn').onclick = 'disable';
+			return true;
+		}
+	} else if (page == 'changeSchoolPassword') {
+		var user_type = document.getElementById('current_user_type').value;
+
+		var new_password = document.getElementById('new_password').value;
+		var new_password_match = document.getElementById('new_password_match').value;
+
+		if (new_password.split(' ').join('') == '') {
+
+			alert(alert_arr.users_new_password_alert);
+			document.getElementById('new_password').focus();
+
+		} else if (new_password_match.split(' ').join('') == '') {
+
+			alert(alert_arr.users_retype_new_password_alert);
+			document.getElementById('new_password_match').focus();
+
+		} else if (new_password != new_password_match) {
+
+			alert(alert_arr.users_new_password_match_alert);
+			document.getElementById('new_password_match').focus();
+
+		} else {
+			document.getElementById('form1').submit();
+			document.getElementById('save_btn').onclick = 'disable';
+			return true;
+		}
+	}
+}
+
+function mobileValidateForm() {
+
+	if (document.form1.user_mobile.value.split(' ').join('') == '') {
+		alert(alert_arr.mobile_alert);
+		document.getElementById('user_mobile').focus();
+		return false;
+
+	} else if (checkPhoneIsNumber(document.getElementById('user_mobile').value) == false) {
+		alert(alert_arr.wrong_mobileType_alert);
+		document.form1.user_mobile.focus();
+		return false;
+
+	} else if (document.form1.user_mobile.value.split(' ').join('').length != 10) {
+		alert(alert_arr.wrong_mobileNum_alert);
+		document.form1.user_mobile.focus();
+		return false;
+
+	} else if (document.form1.user_mobile.value.split(' ').join('').startsWith('05') == false) {
+		alert(alert_arr.wrong_mobileNumPrefix_alert);
+		document.form1.user_mobile.focus();
+		return false;
+
+	} else {
+		document.getElementById('form1').submit();
+		document.getElementById('save_btn').onclick = 'disable';
+		return true;
+	}
+}
+
+/**************************************************************************
+ * The following function is used to check row of item Type
+ * Author : Amena Shweiki
+ * Date: 27th Nov, 2012
+ **************************************************************************/
+function sdMouseOver(i, color) {
+	document.getElementById('test' + i).style.color = color;
+}
+
+/*******************************************************************
+ * This function is used delete spaces like PHP trim function
+ * Author : Fatima Salameh
+ * Creation Date: 30 Nov 2012
+ ******************************************************************/
+
+function trim(string) {
+	return string.replace(/^\s+|\s+$/g, '');
+}
+
+/*****************************************************************************
+ * This function is uset to set visible the password div
+ * Author : Fatima Salameh
+ * Date: 11 Dic 2012
+ ******************************************************************************/
+function openDivPopUp() {
+	document.getElementById('div_popUp').style.visibility = "visible";
+}
+
+/*****************************************************************************
+ * This function is uset to set hidden the password div
+ * Author : Fatima Salameh
+ * Date: 11 Dic 2012
+ ******************************************************************************/
+function closeDivPopUp() {
+	document.getElementById('div_popUp').style.visibility = "hidden";
+	document.getElementById('new_password_match').value = '';
+	document.getElementById('new_password').value = '';
+}
+
+
+/*****************************************************************************
+ * This function is uset to set hidden the parent password  div
+ * Author : Bara Isam
+ * Date: 21 Nov 2013
+ ******************************************************************************/
+function openDiv() {
+	document.getElementById('Parent_div_popUp').style.visibility = "visible";
+}
+
+function openDiv2() {
+	document.getElementById('Parent_div_popUp2').style.visibility = "visible";
+}
+
+/*****************************************************************************
+ * This function is uset to set hidden the parent  password div
+ * Author : Bara Isam
+ * Date: 21 Nov 2013
+ ******************************************************************************/
+function closeDiv() {
+	document.getElementById('Parent_div_popUp').style.visibility = "hidden";
+	document.getElementById('Parent_div_popUp2').style.visibility = "hidden";
+	document.getElementById('new_password_match').value = '';
+	document.getElementById('new_password').value = '';
+}
+/*****************************************************************************
+ * This function is uset to change password ajax
+ * Author : Fatima Salameh
+ * Date: 12 June 2012
+ ******************************************************************************/
+function changeMemberPassword(sendEmail = false) {
+
+	var new_password = document.getElementById('new_password').value;
+	var new_password_match = document.getElementById('new_password_match').value;
+	var user_id = document.getElementById('user_id').value;
+	var module = document.getElementById('module').value;
+	var params = "module=usersView&page=changeUserPasswordPopUp_handler&obj_pss=" + new_password_match + "&user_id=" + user_id+ "&send_email=" + sendEmail;
+	if (new_password.split(' ').join('') != '' && new_password_match.split(' ').join('') != '' && new_password != new_password_match) {
+
+		alert(alert_arr.users_new_password_match_alert);
+		document.getElementById('new_password_match').focus();
+
+	} else {
+		var xmlhttp;
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp = new XMLHttpRequest();
+		} else {// code for IE6, IE5
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.open("POST", "./index.php");
+		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+				var return_value = xmlhttp.responseText;
+
+				if (return_value == 1) {
+					alert(alert_arr.success_changing_password_alert);
+					document.getElementById('div_popUp').style.visibility = "hidden";
+					document.getElementById('new_password_match').value = '';
+					document.getElementById('new_password').value = '';
+				}
+			}
+		};
+		xmlhttp.send(params);
+
+	}
+}
+
+/*****************************************************************************
+ * This function is uset to change  parent pass ajax
+ * Author : Bara Isam
+ * Date:  21 Nov 2012
+ ******************************************************************************/
+function changeParentPassword() {
+
+	var new_password = document.getElementById('parent_pass').value;
+	var new_password_match = document.getElementById('new_parent_pass').value;
+	var strong_password = isStrongPwd(new_password);
+	var user_id = document.getElementById('parent_user_id').value;
+	var module = document.getElementById('module').value;
+	var params = "module=usersView&page=changeUserPasswordPopUp_handler&obj_pss=" + new_password_match + "&user_id=" + user_id;
+	if (new_password.split(' ').join('') != '' && new_password_match.split(' ').join('') != '' && new_password != new_password_match) {
+
+		alert(alert_arr.users_new_password_match_alert);
+		document.getElementById('new_parent_pass').focus();
+
+	}
+	// else if(!strong_password){
+	//     alert(alert_arr.strong_password_alert);
+	//     document.getElementById('parent_pass').focus();
+	// }
+	else {
+		var xmlhttp;
+
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp = new XMLHttpRequest();
+		} else {// code for IE6, IE5
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.open("POST", "./index.php");
+		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+				var return_value = xmlhttp.responseText;
+
+				if (return_value == 1) {
+					alert(alert_arr.success_changing_password_alert);
+					document.getElementById('Parent_div_popUp').style.visibility = "hidden";
+					document.getElementById('Parent_div_popUp2').style.visibility = "hidden";
+					document.getElementById('new_parent_pass').value = '';
+					document.getElementById('parent_pass').value = '';
+				}
+			}
+		}
+		xmlhttp.send(params);
+
+	}
+}
+
+function changeParentPassword2() {
+
+	var new_password = document.getElementById('parent_pass2').value;
+	var new_password_match = document.getElementById('new_parent_pass2').value;
+	var strong_password = isStrongPwd(new_password);
+	var user_id = document.getElementById('parent_user_id2').value;
+	var module = document.getElementById('module').value;
+	var params = "module=usersView&page=changeUserPasswordPopUp_handler&obj_pss=" + new_password_match + "&user_id=" + user_id;
+	if (new_password.split(' ').join('') != '' && new_password_match.split(' ').join('') != '' && new_password != new_password_match) {
+
+		alert(alert_arr.users_new_password_match_alert);
+		document.getElementById('new_parent_pass2').focus();
+
+	}
+	// else if(!strong_password){
+	//     alert(alert_arr.strong_password_alert);
+	//     document.getElementById('parent_pass2').focus();
+	// }
+	else {
+		var xmlhttp;
+
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp = new XMLHttpRequest();
+		} else {// code for IE6, IE5
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.open("POST", "./index.php");
+		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+				var return_value = xmlhttp.responseText;
+
+				if (return_value == 1) {
+					alert(alert_arr.success_changing_password_alert);
+					document.getElementById('Parent_div_popUp').style.visibility = "hidden";
+					document.getElementById('Parent_div_popUp2').style.visibility = "hidden";
+					document.getElementById('new_parent_pass2').value = '';
+					document.getElementById('parent_pass2').value = '';
+				}
+			}
+		}
+		xmlhttp.send(params);
+
+	}
+}
+
+
+/*****************************************************************************
+ * This function is uset to change schools by Ministry
+ * Author : Fatima Salameh
+ * Date: 22 Dec 2012
+ ******************************************************************************/
+function changeSchoolByDirectorate(action) {
+
+	document.getElementById('change_directorate_action').value = action;
+	document.getElementById('selectedDirectorate').value = document.getElementById('directorateSelector').value;
+	document.getElementById('selectedDirectorate_form').submit();
+	/*var directorate_id = document.getElementById('directorateSelector').value;
+     
+     if(directorate_id == 0){
+     var xmlhttp;
+     if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
+     xmlhttp=new XMLHttpRequest();
+     }else{// code for IE6, IE5
+     xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+     }
+     xmlhttp.onreadystatechange=function(){
+     if (xmlhttp.readyState==4 && xmlhttp.status==200){
+     changeSchoolSelector('changingSchool');
+     document.getElementById("directorateMenu_div").innerHTML=xmlhttp.responseText;
+     if(document.getElementById('page').value == 'ministryMainPage'){
+     getDirectorateStatistics(directorate_id);
+     }
+     
+     }
+     }
+     xmlhttp.open("GET","./index.php?module=ministry&page=ministryMenu_handler&directorate_id="+directorate_id,true);
+     xmlhttp.send();
+     
+     }else{
+     
+     var xmlhttp;
+     if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
+     xmlhttp=new XMLHttpRequest();
+     }else{// code for IE6, IE5
+     xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+     }
+     xmlhttp.onreadystatechange=function(){
+     if (xmlhttp.readyState==4 && xmlhttp.status==200){
+     document.getElementById("schoolByDirectorate_div").innerHTML=xmlhttp.responseText;
+     if(document.getElementById('page').value == 'ministryMainPage'){
+     getDirectorateStatistics(directorate_id);
+     }
+     }
+     }
+     xmlhttp.open("GET","./index.php?module=directorate&page=schoolByDirectorate_handler&directorate_id="+directorate_id,true);
+     xmlhttp.send();
+     }*/
+}
+
+
+/*****************************************************************************
+ * This function is uset to change schools by Ministry
+ * Author : Fatima Salameh
+ * Date: 22 Dec 2012
+ ******************************************************************************/
+function selectSchoolByDirectorate(selected_directorate_id, school_span, width) {
+
+	directorate_id = selected_directorate_id.value;
+
+	if (directorate_id != 0) {
+		var xmlhttp;
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp = new XMLHttpRequest();
+		} else {// code for IE6, IE5
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				document.getElementById(school_span).innerHTML = xmlhttp.responseText;
+
+			}
+		}
+		xmlhttp.open("GET", "./index.php?module=directorate&page=school_Directorate_handler&directorate_id=" + directorate_id + "&width=" + width, true);
+		xmlhttp.send();
+
+	}
+}
+
+
+/*****************************************************************************
+ * This function is uset to change schools by Ministry by row
+ * Author : Fatima Salameh
+ * Date: 06 April 2013
+ ******************************************************************************/
+function selectSchoolByDirectorateByRow(selected_directorate_id, span_name, field_name, width, row) {
+
+	directorate_id = selected_directorate_id.value;
+
+	if (directorate_id != 0) {
+		var xmlhttp;
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp = new XMLHttpRequest();
+		} else {// code for IE6, IE5
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				document.getElementById(span_name + row).innerHTML = xmlhttp.responseText;
+			}
+		}
+
+		xmlhttp.open("GET", "./index.php?module=directorate&page=school_Directorate_row_handler&directorate_id=" + directorate_id + "&width=" + width + "&span_name=" + span_name + "&field_name=" + field_name + "&row=" + row, true);
+
+		xmlhttp.send();
+
+	}
+}
+
+
+
+/*****************************************************************************
+ * This function is uset to change schools by directorate
+ * Author : Fatima Salameh
+ * Date: 23 Dec 2012
+ ******************************************************************************/
+function getMenuBySchool() {
+
+	var directorate_id = document.getElementById('schoolSelector').value;
+
+	if (directorate_id == 0) {
+		var xmlhttp;
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp = new XMLHttpRequest();
+		} else {// code for IE6, IE5
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				changeSchoolSelector('changingSchool');
+				document.getElementById("directorateMenu_div").innerHTML = xmlhttp.responseText;
+
+			}
+		}
+		xmlhttp.open("GET", "./index.php?module=directorate&page=directorateMenu_handler", true);
+		xmlhttp.send();
+	} else {
+
+		var xmlhttp;
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp = new XMLHttpRequest();
+		} else {// code for IE6, IE5
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+				changeSchoolSelector('changingSchool');
+				document.getElementById("directorateMenu_div").innerHTML = xmlhttp.responseText;
+
+			}
+		}
+		xmlhttp.open("GET", "./index.php?module=directorate&page=schoolByDirectorate_menu_handler", true);
+		xmlhttp.send();
+	}
+}
+
+
+/*****************************************************************************
+ * This function is uset to change schools by MINSITRY
+ * Author : Fatima Salameh
+ * Date: 24 Dec 2012
+ ******************************************************************************/
+function getMenuBySchoolByMinistry() {
+	var directorate_id = document.getElementById('schoolSelector').value;
+	if (directorate_id == 0) {
+		var xmlhttp;
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp = new XMLHttpRequest();
+		} else {// code for IE6, IE5
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				changeSchoolSelector('changingSchool');
+				document.getElementById("directorateMenu_div").innerHTML = xmlhttp.responseText;
+			}
+		}
+		xmlhttp.open("GET", "./index.php?module=ministry&page=ministryMenu_handler", true);
+		xmlhttp.send();
+	} else {
+
+		var xmlhttp;
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp = new XMLHttpRequest();
+		} else {// code for IE6, IE5
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+				changeSchoolSelector('changingSchool');
+				document.getElementById("directorateMenu_div").innerHTML = xmlhttp.responseText;
+
+			}
+		}
+		xmlhttp.open("GET", "./index.php?module=directorate&page=schoolByDirectorate_menu_handler", true);
+		xmlhttp.send();
+	}
+}
+
+
+/*****************************************************************************
+ * This function is uset to get directorate statistics
+ * Author : Fatima Salameh
+ * Date: 29 Dec 2012
+ ******************************************************************************/
+function getDirectorateStatistics(directorate_id) {
+
+	var xmlhttp;
+	if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp = new XMLHttpRequest();
+	} else {// code for IE6, IE5
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function () {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			document.getElementById("directorateStatistics_div").innerHTML = xmlhttp.responseText;
+
+		}
+	}
+	xmlhttp.open("GET", "./index.php?module=ministry&page=directorateStatistics_handler&directorate_id=" + directorate_id, true);
+	xmlhttp.send();
+}
+
+
+/*****************************************************************************
+ * This function is uset to open scholastic year
+ * Author : Fatima Salameh
+ * Date: 17 Jan 2013
+ ******************************************************************************/
+function openYear() {
+
+	document.getElementById('form1').submit();
+	//document.getElementById('form1').disabled = true;
+	document.getElementById('save_btn').onclick = 'disable';
+	return true;
+}
+
+
+/*****************************************************************************
+ * This function is uset to check if the file is image
+ * Author : Fatima Salameh
+ * Date: 19 Jan 2013
+ ******************************************************************************/
+function checkImage(imagePath) {
+	if (imagePath.lastIndexOf(".png") > 1) {
+		return true;
+	} else if (imagePath.lastIndexOf(".jpg") > 1) {
+		return true;
+	} else if (imagePath.lastIndexOf(".jpeg") > 1) {
+		return true;
+	} else if (imagePath.lastIndexOf(".gif") > 1) {
+		return true;
+	} else if (imagePath.lastIndexOf(".PNG") > 1) {
+		return true;
+	} else if (imagePath.lastIndexOf(".JPG") > 1) {
+		return true;
+	} else if (imagePath.lastIndexOf(".GIF") > 1) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+
+/*************************************************************************************************
+ * This function is used to submit the form in the header to Select the user type.
+ * Author : Fatima Salameh
+ * Date: 22 Jan 2012
+ *************************************************************************************************/
+function selectUserType(userType, mainType, role_id) {
+	var is_logged = document.getElementById('is_logged').value;
+
+	if ((userType == 4 || userType == 20 || userType == 23) && is_logged == 0) {
+		alert(alert_arr.register_alert);
+	} else {
+		document.getElementById('selectedUserType').value = userType;
+		document.getElementById('selectedMainUserType').value = mainType;
+		document.getElementById('role_id').value = role_id;
+		document.getElementById('selectUserType_form').submit();
+	}
+
+}
+
+
+/*************************************************************************************************
+ * This function is used to submit the form in the header to change the user typee.
+ * Author : Fatima Salameh
+ * Date: 22 Jan 2012
+ *************************************************************************************************/
+function changeChangeUserType(selected_user, role_id, action, is_logged) {
+
+	if (selected_user == 4 && is_logged == 0) {
+		alert(alert_arr.register_alert);
+	} else {
+		document.getElementById('change_user_action').value = action;
+		document.getElementById('selected_user').value = selected_user;
+		document.getElementById('role_id').value = role_id;
+		document.getElementById('changeUserType_form').submit();
+	}
+}
+
+
+/*************************************************************************************************
+ * This function is used to submit the form in the header to change the user typee.
+ * Author : Fatima Salameh
+ * Date: 22 Jan 2012
+ *************************************************************************************************/
+function showVoteResult(end_date, poll_end_date, current_date, counter) {
+
+	if (current_date >= poll_end_date) {
+
+		for (var i = 1; i <= counter; i++) {
+			document.getElementById('diplayVoteResult' + i).style.display = "block";
+		}
+
+	} else {
+		alert(alert_arr.vote_showResult_alert + ' ' + end_date);
+	}
+}
+
+
+
+
+/******************************************************************************************************
+ * This function is used to check if is registered user
+ * Author : Fatima Salameh
+ * Creation Date: 05 March 2013
+ ******************************************************************************************************/
+function headerLogin() {
+	if (document.getElementById('username').value.split(' ').join('') == '') {
+
+		alert(alert_arr.username_alert);
+		document.getElementById('username').focus();
+		return false
+
+	} else if (document.getElementById('password').value.split(' ').join('') == '') {
+
+		alert(alert_arr.password_alert);
+		document.getElementById('password').focus();
+		return false
+
+	} else {
+
+		document.getElementById('headerLogin_form').submit();
+		return true;
+	}
+}
+
+/*******************************************************************
+ * This function used to check the passport check box if is not ID
+ * Author : Fatima Salameh
+ * Creation Date: 01 March 2013
+ ******************************************************************/
+function checkIfUserHasID(ID, checkBox) {
+
+	var user_ID = document.getElementById(ID).value;
+
+	if (checkWrongId(user_ID) == false) {
+		document.getElementById(checkBox).checked = true;
+	}
+}
+
+/*************************************************************************************************
+ * This function is for use ENTER to enter to admin
+ * Author : Fatima Salameh
+ * Date: 28 Oct 2012
+ *************************************************************************************************/
+
+function headerEnterOption(keyEnter) {
+	if (keyEnter.keyCode == 13) {
+		/* Submit al formulario */
+		document.getElementById('headerButton').click();
+	}
+}
+
+/*
+ * Author:Zaid Direya
+ * Date:22/7/2013
+ * Description:check if size of uploaded file exeed the allowd size
+ *
+ */
+function checkFileSize(id) {
+
+	file = null;
+	if (document.getElementById(id))
+		file = document.getElementById(id).files[0];
+
+	if (file && file.size > file_size) {
+
+		return false;
+	}
+
+
+	return true;
+}
+
+
+/*
+ * Author:Zaid Direya
+ * Date:22/7/2013
+ * Description:check if size of uploaded file exeed the allowd size
+ *
+ */
+function checkMultiFileSizes(id, i) {
+
+
+
+	field_id = id + i;
+
+	while (document.getElementById(field_id) !== null || document.get) {
+
+
+		file = document.getElementById(field_id).files[0]
+		if (file && file.size > file_size) {
+
+			return false;
+		}
+		i++;
+		field_id = id + i;
+	}
+	return true;
+}
+
+function convertDateTime(date) {
+	var localTime = new Date(date);
+	var utc = localTime.getTime() + (localTime.getTimezoneOffset() * 60000);
+	return (new Date((utc + (2 * 3600000))));
+}
+
+function allowClosingByDirectorate(school_id) {
+	$.post('./index.php?module=admin&page=block_allow', {id: school_id}, function (data) {
+		var temp = data.split('*#');
+		if (temp[1] == 1)
+			$('#image_' + school_id).attr('src', 'images/block.png');
+		else if (temp[1] == 0)
+			$('#image_' + school_id).attr('src', 'images/unblock.png');
+	});
+}
+
+
+
+$(document).ready(function () {
+	$("#dialog").dialog({
+		autoOpen: false,
+		hide: 'fold',
+		show: 'blind',
+		width: 300,
+		buttons: [{text: alert_arr.ok_tt, click: function () {
+				$(this).dialog("close");
+			}}]
+	});
+
+	$("#sub_btn").click(function () {
+		$.post("./index.php?module=teachers&page=generate_random", function (result) {
+			var dialog_content = $("#dialog").html();
+			dialog_content = dialog_content.replace("#subkey#", '<span style="font-weight:bold;">' + result + '</span>');
+			$("#dialog").html(dialog_content);
+			$("#dialog").dialog('open');
+		});
+
+	});
+	$("#directorateSelector").select2();
+	$("#schoolSelector").select2();
+});
+
+function confirmCancel(module,page){
+
+	var approve_action = true;
+
+	answer = confirm(alert_arr.confirmCancelAlert);
+
+	if (answer == 0) {
+		approve_action = false;
+	} else {
+		window.location='./index.php?module='+module+'&page='+page;
+	}
+}
+
+
+function hideLoader(){
+	$('#loading_div').hide();
+}
+
+function showLoader(){
+	$('#loading_div').show();
+}
+
+/*
+* Date: 9 Jan 2019
+*/
+function isStrongPwd(password) {
+
+	var regExp = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]).{8,}/;
+
+	var validPassword = regExp.test(password);
+
+	return validPassword;
+
+}
+
+function validatePassword(password, mesgElm, hiddenField){
+	document.getElementById(hiddenField).value = '0';
+	document.getElementById(mesgElm).innerText = '';
+
+	if(password.length === 0){
+		return;
+	}
+
+	var engLetters = ((new RegExp("[a-z]")).test(password) || (new RegExp("[A-Z]")).test(password));
+	var numbers = (new RegExp("[0-9]")).test(password);
+	var specials = (new RegExp("[$@$!%*#?&]")).test(password);
+
+	if(!engLetters || !numbers || !specials){
+		document.getElementById(mesgElm).innerText = 'كلمة السر ضعيفة';
+	} else{
+		document.getElementById(hiddenField).value = '1';
+	}
+}
+
+function revertToAdmin(){
+	window.location.href = "./index.php?module=admin&page=revertToAdmin";
+}
+
+//send request every 5 minutes to prevent session expired
+setInterval(function() {
+	//your jQuery ajax code
+	const xhttp = new XMLHttpRequest();
+	xhttp.onload = function() {
+		//
+	};
+	xhttp.open("GET", "./images/pna_logo.png", true);
+	xhttp.send();
+}, 1000 * 60 * /* X */5); // where X is your every X minutes

@@ -1,0 +1,885 @@
+// JavaScript Document
+
+/***********************************************************************************************************
+ * This function used to submit the form to delete, update or create new item in subject grade homework
+ * Author : Fatima Salameh
+ * Date   :21 Nov 2012
+ ************************************************************************************************************/
+
+function submitToDeleteAndUpdateMark(action, deletable, record_id, grade_id, subject_id,is_sub_subject,semester) {
+
+    var approve_action = true;
+
+    if (action == 'delete') {
+        if (deletable == 0) {
+            document.getElementById('request_mode').value = action;
+            document.getElementById('record_id').value = record_id;
+            document.getElementById('selected_subject_id').value = subject_id;
+            document.getElementById('is_sub_subject').value = is_sub_subject;
+            document.getElementById('selected_semester_id').value = semester;
+            document.getElementById('selected_grade_id').value = grade_id;
+            answer = confirm(alert_arr.confirm_delete_alert);
+
+            if (answer == 0) {
+                approve_action = false;
+            } else {
+                document.listView.submit();
+            }
+        } else {
+            alert(alert_arr.deny_delete_alert);
+            return false
+        }
+    } else if (action == 'update') {
+
+        document.getElementById('request_mode').value = action;
+        document.getElementById('record_id').value = record_id;
+        document.getElementById('selected_subject_id').value = subject_id;
+        document.getElementById('is_sub_subject').value = is_sub_subject;
+        document.getElementById('selected_semester_id').value = semester;
+        document.getElementById('selected_grade_id').value = grade_id;
+
+        document.listView.submit();
+    } else if (action == 'create') {
+
+        document.getElementById('request_mode').value = action;
+        document.getElementById('selected_subject_id').value = subject_id;
+        document.getElementById('is_sub_subject').value = is_sub_subject;
+        document.getElementById('selected_semester_id').value = semester;
+        document.getElementById('selected_grade_id').value = grade_id;
+
+        document.listView.submit();
+
+    } else {
+        document.getElementById('request_mode').value = action;
+        document.getElementById('record_id').value = record_id;
+        document.getElementById('subject_id').value = subject_id;
+        document.getElementById('grade_id').value = grade_id;
+
+        document.getElementById('listView').submit();
+    }
+}
+
+
+/*******************************************************************
+ * This function used to load the functions of calendar
+ * Author : Fatima Salameh
+ * Creation Date: 22 Nov 2012
+ ******************************************************************/
+
+function initiateDates(start_date, end_date, default_date) {
+    date_end = convertDateTime(end_date);
+    date_start = convertDateTime(start_date);
+    d_date = convertDateTime(default_date);
+
+    $(function () {
+
+
+        $("#exam_date").datepicker({
+            showOn: "focus",
+            buttonImage: "",
+            buttonImageOnly: false,
+            dateFormat: 'dd-mm-yy',
+            changeYear: true,
+            changeMonth: true,
+            defaultDate: d_date,
+            yearRange: date_start.getFullYear() + ':' + (date_end.getFullYear()+10)
+        });
+    });
+
+
+}
+
+
+/*******************************************************************
+ * This function used to sort
+ * Author : Brar Isam
+ * Creation Date: 26 Nov 2013
+ ******************************************************************/
+function doSort(column_name, record_id, filter_type, table_ttl) {
+
+
+    var sort_type = document.getElementById('sort_type').value;
+    var span = document.getElementById("sort").innerHTML;
+
+    document.getElementById('column_name').value = column_name;
+    document.getElementById('record_id').value = record_id;
+    document.getElementById('is_filtered').value = 'yes';
+    document.getElementById('filter_type').value = filter_type;
+    document.getElementById('subject_id').value = '';
+    document.getElementById('grade_id').value = '';
+
+
+    if (sort_type == "ASC") {
+        sort_type = "DESC";
+        document.getElementById('sort_type').value = "DESC";
+
+    }
+    else if (sort_type == "DESC") {
+        sort_type = "ASC";
+        document.getElementById('sort_type').value = "ASC";
+
+    }
+    document.listView.action = './index.php?module=marks&page=viewStudentByParent';
+    document.listView.submit();
+}
+
+
+
+
+
+
+
+/******************************************************************
+ * This function is used to validate the create or edit homework
+ * Author : Fatima Salameh
+ * Creation Date: 22 Nov 2012
+ ********************************************************************/
+
+function validateForm() {
+    
+    var page = document.getElementById('page').value;
+    
+    if (page == 'EditView') {
+        var estimation = document.getElementById('estimation').checked;
+        var grade_level = document.getElementById('grade_level').value;
+        if (document.form1.exam_name_ar.value.split(' ').join('') == '') {
+
+            alert(alert_arr.title_ar_alert);
+            document.getElementById('exam_name_ar').focus();
+            return false;
+
+        } else if (document.form1.content_ar.value.split(' ').join('') == '') {
+
+            alert(alert_arr.description_ar_alert);
+            document.getElementById('content_ar').focus();
+            return false
+
+        }
+        else if (document.getElementById('semester_type_id').value == 0) {
+            alert(alert_arr.semester_empty_alert);
+            document.getElementById('semester_type_id').focus();
+            return false;
+        }
+
+
+        else if (document.form1.test_mark.value.split(' ').join('') == '' && grade_level > 4) {
+
+
+            alert(alert_arr.test_mark_alert);
+            document.getElementById('test_mark').focus();
+            return false
+
+        } else if (!isFloat(document.getElementById('test_mark').value)) {
+            alert(alert_arr.integer_mark_alert);
+            document.getElementById('test_mark').focus();
+            return false;
+
+        } else if (document.form1.passing_mark.value.split(' ').join('') == '' && grade_level > 4) {
+
+
+            alert(alert_arr.passing_mark_alert);
+            document.getElementById('passing_mark').focus();
+            return false
+
+        } else if (!isFloat(document.getElementById('passing_mark').value)) {
+            alert(alert_arr.integer_mark_alert);
+            document.getElementById('passing_mark').focus();
+            return false;
+
+        } else if (parseFloat(document.getElementById('passing_mark').value) > parseFloat(document.getElementById('test_mark').value)) {
+
+            alert(alert_arr.passing_mark_error_alert);
+            document.getElementById('passing_mark').focus();
+            return false
+
+        } else if (document.form1.exam_type_id.value == '0') {
+
+            alert(alert_arr.mark_type_alert);
+            document.getElementById('exam_type_id').focus();
+            return false
+
+        } else if (document.form1.exam_date.value.split(' ').join('') == '') {
+
+            alert(alert_arr.mark_date_alert);
+            document.getElementById('exam_date').focus();
+            return false
+
+        } else {
+//            $.ajax({
+//                url: "index.php",
+//                data: {module: 'marks', page: 'marksHandler', handlerType: 'CheckIncompleteExam', school: $('#school_id').val(),
+//                    grade: $('#selected_grade_id').val(), subject: $('#selected_subject_id').val(), year: $('#scholastic_year').val(),
+//                    semester: $('#semester_type_id').val(), record_id: $('#record_id').val()}
+//            }).done(function (data) {
+//                if (data == 0) {
+//                    document.form1.submit();
+//                    document.getElementById('save_btn').onclick = 'disable';
+//                    return true;
+//                } else {
+//                    alert(alert_arr.existIncompleteExam);
+//                    return false;
+//                }
+//            });
+document.form1.submit();
+                    document.getElementById('save_btn').onclick = 'disable';
+                    return true;
+        }
+
+    } else if (page == 'addStudentMark') {
+
+        var count = document.getElementById('count').value;
+        var exam_mark = parseFloat(document.getElementById('exam_mark').value);
+
+        for (var i = 0; i < count; i++) {
+            if (document.getElementById('mark' + i).value.split(' ').join('') != '') {
+                if (!isFloat(document.getElementById('mark' + i).value)) {
+                    alert(alert_arr.integer_mark_alert);
+                    document.getElementById('mark' + i).focus();
+                    return false;
+
+                } else if (parseFloat(document.getElementById('mark' + i).value) > exam_mark) {
+                    alert(alert_arr.max_test_mark + ' ' + exam_mark);
+                    document.getElementById('mark' + i).focus();
+                    return false;
+                }
+            }
+        }
+        document.form1.submit();
+        //document.getElementById('form1').disabled = true;
+        document.getElementById('save_btn').onclick = 'disable';
+        return true;
+
+    }
+}
+
+function validateEnableMarkForm(type) {
+    if (document.listView.school_year.value == '') {
+        alert(alert_arr.select_year);
+        document.getElementById('school_year').focus();
+        return false;
+    }
+    if (document.listView.semester.value == '') {
+        alert(alert_arr.please_select_semester);
+        document.getElementById('semester').focus();
+        return false;
+    }
+    if (document.listView.grade.value == '') {
+        alert(alert_arr.please_select_grade);
+        document.getElementById('grade').focus();
+        return false;
+    }
+    if (document.listView.exam.value == '') {
+        alert(alert_arr.select_exam_alert);
+        document.getElementById('exam').focus();
+        return false;
+    }
+
+    document.getElementById('request_mode').value = type
+    document.listView.submit();
+    return true;
+}
+
+function validateInsertMarkForm(type) {
+    if (document.listView.school_year.value == '') {
+        alert(alert_arr.select_year);
+        document.getElementById('school_year').focus();
+        return false;
+    }
+    if (document.listView.semester.value == '') {
+        alert(alert_arr.please_select_semester);
+        document.getElementById('semester').focus();
+        return false;
+    }
+    if (document.listView.directorate.value == '') {
+        alert(alert_arr.directorate_alert);
+        document.getElementById('directorate').focus();
+        return false;
+    }
+    if (document.listView.school.value == '') {
+        alert(alert_arr.select_school_alert);
+        document.getElementById('school').focus();
+        return false;
+    }
+    if (document.listView.teacher.value == '') {
+        alert(alert_arr.select_teacher_ttl);
+        document.getElementById('teacher').focus();
+        return false;
+    }
+    if (document.listView.grade.value == '') {
+        alert(alert_arr.select_grade_alert);
+        document.getElementById('grade').focus();
+        return false;
+    }
+    if (document.listView.subject.value == '') {
+        alert(alert_arr.select_subject_alert);
+        document.getElementById('subject').focus();
+        return false;
+    }
+    if (document.listView.exam_type.value == '') {
+        alert(alert_arr.select_exam_type_alert);
+        document.getElementById('exam_type').focus();
+        return false;
+    }
+    if (document.listView.exam.value == '') {
+        alert(alert_arr.select_exam_alert);
+        document.getElementById('exam').focus();
+        return false;
+    }
+
+    document.getElementById('request_mode').value = type;
+    document.listView.submit();
+    return true;
+}
+/******************************************************************
+ * This function is for change publish mark option
+ * Author : Bara isam
+ * Creation Date: 28-10-2013
+ ******************************************************************/
+
+function changePunblishHomeworkOption() {
+
+
+    var current_publish = document.getElementById('submitted').value;
+    var request_mode = document.getElementById('request_mode').value;
+    var grade_level = document.getElementById('grade_level').value;
+
+    var estimation = document.getElementById('estimation').checked;
+
+    if (document.form1.exam_name_ar.value.split(' ').join('') == '') {
+
+        alert(alert_arr.title_ar_alert);
+        document.getElementById('exam_name_ar').focus();
+        return false
+
+    } else if (document.form1.content_ar.value.split(' ').join('') == '') {
+
+        alert(alert_arr.description_ar_alert);
+        document.getElementById('content_ar').focus();
+        return false
+
+    } else if (document.form1.test_mark.value.split(' ').join('') == '' && grade_level > 4) {
+
+        alert(alert_arr.test_mark_alert);
+        document.getElementById('test_mark').focus();
+        return false
+
+    } else if (!isFloat(document.getElementById('test_mark').value)) {
+        alert(alert_arr.integer_mark_alert);
+        document.getElementById('test_mark').focus();
+        return false;
+
+    } else if (document.form1.passing_mark.value.split(' ').join('') == '' && grade_level > 4) {
+
+        alert(alert_arr.passing_mark_alert);
+        document.getElementById('passing_mark').focus();
+        return false
+
+    } else if (!isFloat(document.getElementById('passing_mark').value)) {
+        alert(alert_arr.integer_mark_alert);
+        document.getElementById('passing_mark').focus();
+        return false;
+
+    } else if (parseFloat(document.getElementById('passing_mark').value) > parseFloat(document.getElementById('test_mark').value)) {
+
+        alert(alert_arr.passing_mark_error_alert);
+        document.getElementById('passing_mark').focus();
+        return false
+
+    } else if (document.form1.exam_type_id.value == '0') {
+
+        alert(alert_arr.mark_type_alert);
+        document.getElementById('exam_type_id').focus();
+        return false
+
+    } else if (document.form1.exam_date.value.split(' ').join('') == '') {
+
+        alert(alert_arr.mark_date_alert);
+        document.getElementById('exam_date').focus();
+        return false
+
+    } else {
+
+        if (current_publish == 0) {
+            published = 1;
+        } else {
+            published = 0;
+        }
+
+        if (current_publish == 0) {
+            document.getElementById('submitted').value = 1;
+            document.getElementById('active').value = 1;
+            document.getElementById('publish_btn').innerHTML = label_arr.unpublish_ttl;
+
+        } else {
+            document.getElementById('submitted').value = 0;
+            document.getElementById('active').value = 0;
+            document.getElementById('publish_btn').innerHTML = label_arr.publish_ttl;
+        }
+
+
+        document.form1.submit();
+        document.getElementById('form1').disabled = true;
+        return true;
+    }
+}
+
+
+/******************************************************************
+ * This function is for chanche publish and unpublish button
+ * Author : Fatima Salameh
+ * Creation Date: 23 November 2012
+ ******************************************************************/
+
+function changePunblishOption() {
+
+    var count = document.getElementById('count').value;
+    var exam_mark = parseFloat(document.getElementById('exam_mark').value);
+    var current_publish = document.getElementById('published').value;
+
+    for (var i = 0; i < count; i++) {
+        if (document.getElementById('mark' + i).value.split(' ').join('') != '') {
+            if (!isFloat(document.getElementById('mark' + i).value)) {
+                alert(alert_arr.integer_mark_alert);
+                document.getElementById('mark' + i).focus();
+                return false;
+
+            } else if (parseFloat(document.getElementById('mark' + i).value) > exam_mark) {
+                alert(alert_arr.max_test_mark + ' ' + exam_mark);
+                document.getElementById('mark' + i).focus();
+                return false;
+            }
+        }
+    }
+
+    if (current_publish == 0) {
+        published = 1;
+    } else {
+        published = 0;
+    }
+
+    if (current_publish == 0) {
+        document.getElementById('published').value = 1;
+        document.getElementById('publish_btn').innerHTML = label_arr.unpublish_ttl;
+
+    } else {
+        document.getElementById('published').value = 0;
+        document.getElementById('publish_btn').innerHTML = label_arr.publish_ttl;
+    }
+
+    document.getElementById('request_mode').value = 'update';
+
+    document.form1.submit();
+    //document.getElementById('form1').disabled = true;
+    document.getElementById('save_btn').onclick = 'disable';
+    return true;
+
+
+}
+
+
+
+
+/******************************************************************
+ * This function is used to change listview by filter
+ * Author : Fatima Salameh
+ * Creation Date: 27 May 2012
+ ********************************************************************/
+
+function changeListByFilter(filter_type, record_id) {
+    document.getElementById('record_id').value = record_id;
+    document.getElementById('is_filtered').value = 'yes';
+    document.getElementById('filter_type').value = filter_type;
+    document.form1.submit();
+}
+
+/******************************************************************
+ * This function is used to change listview by filter
+ * Author : Fatima Salameh
+ * Creation Date: 27 May 2012
+ ********************************************************************/
+
+function changeListByFilterForParent(filter_type, record_id) {
+    document.getElementById('record_id').value = record_id;
+    document.getElementById('is_filtered').value = 'yes';
+    document.getElementById('filter_type').value = filter_type;
+
+    document.getElementById('subject_id').value = '';
+    document.getElementById('grade_id').value = '';
+
+    document.listView.action = './index.php?module=marks&page=viewStudentByParent';
+    document.listView.submit();
+}
+
+/*******************************************************************
+ * This function used to submit cancel view
+ * Author : Fatima Salameh
+ * Date: 11 June 2013
+ *****************************************************************/
+function cancelSubmitForm(module, page, action, record_id, grade_id, subject_id,semester,is_sub_subject) {
+
+    document.form1.record_id.value = record_id;
+    document.form1.selected_grade_id.value = grade_id;
+    document.form1.selected_subject_id.value = subject_id;
+    document.form1.selected_semester_id.value = semester;
+    document.form1.is_sub_subject.value = is_sub_subject;
+    document.form1.request_mode.value = action;
+    document.form1.is_submitted.value = 'No';
+    document.form1.page.value = page;
+    document.form1.mail_content.value = '';
+    document.form1.action = './index.php?module=' + module + '&page=' + page;
+    document.form1.submit();
+
+}
+
+function addMarkes(record, grade, subject) {
+    $("#record_id").val(record);
+    $("#grade_id").val(grade);
+    $("#subject_id").val(subject);
+    $("#listView").attr("action", "./index.php?module=marks&page=addStudentMark");
+    $("#listView").submit();
+}
+
+
+function detailsViewForm(module, page, record_id, grade_id, subject_id,semester_id, is_sub_subject) {
+
+    document.listView.record_id.value = record_id;
+    document.listView.selected_subject_id.value = subject_id;
+    document.listView.selected_grade_id.value = grade_id;
+     document.listView.selected_semester_id.value = semester_id;
+      document.listView.is_sub_subject.value = is_sub_subject;
+    document.listView.action = './index.php?module=' + module + '&page=' + page;
+    document.listView.submit();
+
+
+}
+
+function GetExamsConfigurations() {
+    var semester = $('#semester_type_id').val();
+    var grade = $('#selected_grade_id').val();
+    var subject = $('#selected_subject_id').val();
+    if (semester != 0 && grade != null && subject != null && grade != 0 && subject != 0) {
+        $.ajax({
+            url: "./index.php",
+            data: {module: 'marks', page: 'marksHandler', handlerType: 'GetExamsConfigurations', semester: semester, grade: grade, subject: subject}
+        }).done(function (data) {
+            $('#marks_ExamsTypes').html(data);
+        });
+    } else {
+        var htmlData = '<select name="exam_type_id" id="exam_type_id" class="picklist_style" style="width:120px;">\n\
+<option value="0">-- ' + label_arr.selectExamType_ttl + ' --</option>\n\
+</select>';
+        $('#marks_ExamsTypes').html(htmlData);
+    }
+}
+
+$(function () {
+    $(".markBox").on("keydown", function (event) {
+        var key = event.keyCode || event.which;
+        if (9 == key) {
+            event.preventDefault();
+            $(this).closest('tr').next('tr').next('tr').find('.markBox').focus();
+        }
+        else if (38 == key) {
+            event.preventDefault();
+            $(this).closest('tr').prev('tr').prev('tr').find('.markBox').focus();
+        }
+    });
+    $("#checkAll").click(function () {
+        $(".publish-box").prop("checked", $(this).prop("checked"));
+    });
+
+    $("#save_mark_btn").click(function () {
+        var alerts = [];
+        $(".markBox").each(function () {
+            var value = $(this).val();
+            if (value.trim().length != 0) {
+                if (!$.isNumeric(value) || value < 0) {
+                    alerts[0] = true;
+                    $(this).animate({borderColor: "#A94442"}, 'slow');
+                } else if (value > exam_mark) {
+                    alerts[1] = true;
+                    $(this).animate({borderColor: "#A94442"}, 'slow');
+                }
+            }
+        });
+        if ($('.estimation_drop').length != 0) {
+            $(".estimation_drop").each(function () {
+             //   if (0 == $(this).val()) {
+             //       alerts[3] = true;
+             //       $(this).animate({borderColor: "#A94442"}, 'slow');
+            //    }
+            });
+        }
+
+        if (alerts.length === 0) {
+            document.form1.submit();
+            return true;
+        }
+        if (alerts[0] == true)
+            alert(alert_arr.integer_mark_alert);
+        if (alerts[1] == true)
+            alert(alert_arr.max_test_mark + ' ' + exam_mark);
+        if (alerts[2] == true)
+            alert(alert_arr.empty_mark);
+        if (alerts[3] == true)
+            alert(alert_arr.estimation);
+        return false;
+    });
+});
+
+
+function openSemester(evt, tabname) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabname).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+$( document ).ready(function() {
+    $("tr.table_txt:even").addClass('alt_row');
+    $("tr > td > input").focus(function(e){
+        $(this).parent().parent().addClass('highlight');
+    }).blur(function(e){
+        $(this).parent().parent().removeClass('highlight');
+    });
+
+   
+});
+
+function setEstimation(rowid){
+    var val = document.getElementById('mark'+rowid).value;
+    val = (parseFloat(val) * 100)/exam_mark;
+    //alert(exam_mark);
+    //var from_mark = $("#estimation_mark"+rowid+" option:selected").attr("frommark");
+    //var to_mark = $("#estimation_mark"+rowid+" option:selected").attr("tomark");
+    var myOpts = document.getElementById('estimation_mark'+rowid).options;
+    var marks = new Array();
+    for(var i=0;i < myOpts.length; i++){
+        var m = new Array();
+        if(val <= myOpts[i].getAttribute('tomark') && parseInt(val) >= myOpts[i].getAttribute('frommark')){
+            myOpts[i].selected = true;
+        }
+    }
+    
+}
+
+/*
+* Date: 9 Jan, 2020
+*/
+function getExamMinAndMax(grade_level){
+    
+    var exam_type = $('#exam_type_id').val();
+    var test_mark = $('#test_mark');
+    var test_mark_label = $('#test_mark_label');
+    var passing_mark = $('#passing_mark');
+    var passing_mark_label = $('#passing_mark_label');
+    test_mark.val('');
+    passing_mark.val('');
+
+    if(exam_type != 0 && grade_level > 4){
+        showLoader();
+        $.ajax({
+            type: 'get',
+            url: "./index.php",
+            dataType: "json",
+            data: {module: 'marks', page: 'marksHandler', handlerType: 'getExamMinAndMax', exam_type: exam_type}
+        }).done(function (data) {           
+            test_mark.val(data.percentage_of_max_mark);
+            test_mark_label.html(data.percentage_of_max_mark);
+            passing_mark.val(data.Percentage_of_passing_mark);
+            passing_mark_label.html(data.Percentage_of_passing_mark);
+            hideLoader();
+        });
+    }
+
+}
+
+// INSERT MARKS SECTION
+
+function fetchSchoolsByDirectorate(dir, school_id){
+    if(dir != ''){
+        $.ajax({
+            url: './index.php',
+            method: 'POST',
+            data: {
+                module: 'benefactors',
+                page: 'benefactorsHandler',
+                handlerType: 'getSchoolByDirectorate',
+                directorate: dir
+            },
+            dataType: 'html',
+            success: function(response){
+                $('#'+school_id).html(response);
+            },
+            error: function(){
+            }
+        });
+    } else{
+        $('#'+school_id).html('<option value="">...</option>');
+    }
+}
+
+function fetchTeachersBySchool(school, teacher_id){
+    if(school != ''){
+        $.ajax({
+            url: './index.php',
+            method: 'POST',
+            data: {
+                module: 'marks',
+                page: 'InsertMarks_handler',
+                handlerType: 'getSchoolTeachers',
+                school: school
+            },
+            dataType: 'html',
+            success: function(response){
+                $('#'+teacher_id).html(response);
+            },
+            error: function(){
+            }
+        });
+    } else{
+        $('#'+teacher_id).html('<option value="">...</option>');
+    }
+}
+
+function fetchGradeByTeacherForExamReport() {
+    var teacher_id = $('#teacher').val();
+    var school_id = $('#school').val();
+    var exam_grade = $('#grade');
+    var year = $('#school_year').val();
+    var semester = $('#semester').val();
+
+    if (teacher_id != '' && school_id != '') {
+
+        $.ajax({
+            type: 'POST',
+            url: "./index.php",
+            dataType: "json",
+            data: {module: 'reports', page: 'reportsHandler', handlerType: 'gradeByTeacher', teacher_id: teacher_id,school_id:school_id,year:year,semester:semester, forInsertMark: true}
+        }).done(function (data) {
+            exam_grade.get(0).options.length=1;
+            $.each(data, function(i,obj) {
+                exam_grade.append($('<option>').text(obj.grade_name).attr('value', obj.grade_id));
+            });
+        });
+    }
+    // else{
+    //     getGradesBySchool('exam_grade_id');
+    // }
+}
+
+function getSubjectByGradeForExamReport() {
+
+    var year = $('#school_year').val();
+    var semester = $('#semester').val();
+    var school_id = $('#school').val();
+    var grade_id = $('#grade').val();
+    var teacher_id = $('#teacher').val();
+    var subject = $('#subject');
+    if (grade_id != '' && year != '' && semester != '' && school_id !='') {
+
+        $.ajax({
+            type: 'POST',
+            url: "./index.php",
+            dataType: "json",
+            data: {module: 'reports', page: 'reportsHandler', handlerType: 'getSubjects', grade_id: grade_id,year:year,semester:semester,teacher_id:teacher_id,school_id:school_id,forInsertMark: true}
+        }).done(function (data) {
+            subject.get(0).options.length=1;
+            $.each(data, function(i,obj) {
+                subject.append($('<option>').text(obj.subject_name_ar).attr('value', obj.subject_id));
+            });
+        });
+    }else{
+        subject.get(0).options.length=1;
+    }
+}
+
+function getExamTypes() {
+    var grade = $('#grade').val();
+    var year = $('#school_year').val();
+    var semester = $('#semester').val();
+    var subject = $('#subject').val();
+    var exam_types = $('#exam_type');
+    if (grade != '' && year != '' && semester != '' && subject != '') {
+
+        $.ajax({
+            type: 'POST',
+            url: "./index.php",
+            dataType: "json",
+            data: {module: 'reports', page: 'reportsHandler', handlerType: 'getExamTypes', grade_id: grade,year:year,semester:semester,subject_id:subject}
+        }).done(function (data) {
+            exam_types.get(0).options.length=1;
+            $.each(data, function(i,obj) {
+                exam_types.append($('<option>').text(obj.exam_name_ar).attr('value', obj.ID));
+            });
+        });
+    }else{
+
+        exam_types.get(0).options.length=1;
+    }
+}
+function getExamTypesByLevel() {
+    var year = $('#school_year').val();
+    var semester = $('#semester').val();
+    var grade = $('#grade').val();
+    var exam = $('#exam');
+
+    if (year != '' && semester != '' && grade != '') {
+
+        $.ajax({
+            type: 'POST',
+            url: "./index.php",
+            dataType: "json",
+            data: {module: 'reports', page: 'reportsHandler', handlerType: 'getExamTypesByLevel', year:year,semester:semester,grade:grade}
+        }).done(function (data) {
+            exam.get(0).options.length=1;
+            $.each(data, function(i,obj) {
+                exam.append($('<option>').text(obj.exam_number).attr('value', obj.exam_number));
+            });
+        });
+    }else{
+
+        exam.get(0).options.length=1;
+    }
+}
+
+function getTestBySubjectForExamReport() {
+
+    var school_id = $('#school').val();
+    var grade = $('#grade').val();
+    var year = $('#school_year').val();
+    var semester = $('#semester').val();
+    var subject_id = $('#subject').val();
+    var exam_type_id = $('#exam_type').val();
+    var exams = $('#exam');
+    if (grade != '' && school_id !='' && year != '' && semester != '' && subject_id != '' && exam_type_id !='') {
+
+        $.ajax({
+            type: 'POST',
+            url: "./index.php",
+            dataType: "json",
+            data: {module: 'reports', page: 'reportsHandler', handlerType: 'getExams', grade_id: grade,year:year,semester:semester,subject_id:subject_id,exam_type_id:exam_type_id, school_id:school_id, forInsertMark: true}
+        }).done(function (data) {
+            exams.get(0).options.length=1;
+            $.each(data, function(i,obj) {
+                exams.append($('<option>').text(obj.exam_name_ar).attr('value', obj.exam_id));
+            });
+        });
+    }else{
+        exams.get(0).options.length=1;
+    }
+
+}
